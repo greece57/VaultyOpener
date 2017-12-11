@@ -23,9 +23,10 @@ namespace VaultyOpener
             string inputPath = textBox1.Text;
             string outputPath = textBox2.Text;
 
-            string[] filePaths = Directory.GetFiles(inputPath, "*.vdata", SearchOption.TopDirectoryOnly);
+            string[] filePaths = Directory.GetFiles(inputPath, "*.vdata", SearchOption.AllDirectories);
 
             int fileNr = 0;
+            int vidNr = 0;
             foreach (string filePath in filePaths)
             {
                 var firstLine = File.ReadAllLines(filePath)[0];
@@ -58,6 +59,13 @@ namespace VaultyOpener
                     {
                         MessageBox.Show(ex.Message);
                     }
+                } else
+                {
+                    string filePathOut = outputPath + "\\vid" + vidNr.ToString() + ".mp4";
+
+                    File.Copy(filePath, filePathOut);
+
+                    vidNr++;
                 }
 
             }
